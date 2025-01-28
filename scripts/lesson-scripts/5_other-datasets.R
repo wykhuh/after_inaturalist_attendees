@@ -13,9 +13,32 @@ nc_boundaries <- read_sf(here('data/raw/Neighborhood_Councils_(Certified)/Neighb
 
 
 ## -----------------------------------------------------------------------------
+View(nc_boundaries)
+
+
+## -----------------------------------------------------------------------------
+
+expo_park_boundary <- read_sf(here('data/raw/boundaries_expo_park_area.geojson'))  
+mapview(nc_boundaries) +
+  mapview(expo_park_boundary)
+  
+
+
+## -----------------------------------------------------------------------------
 ggplot() +
   geom_sf(data=nc_boundaries) +
   theme_minimal()
+
+
+## -----------------------------------------------------------------------------
+arroyo_seco <- nc_boundaries %>%
+  filter(NAME == 'ARROYO SECO NC')
+
+mapview(arroyo_seco)
+
+
+## -----------------------------------------------------------------------------
+st_write(arroyo_seco, here('data/cleaned/arroyo_seco_boundaries.geojson'))
 
 
 ## ----read_neighborhood_file---------------------------------------------------

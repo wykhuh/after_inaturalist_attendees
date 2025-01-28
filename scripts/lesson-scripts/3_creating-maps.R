@@ -81,25 +81,30 @@ mapview(my_inat_sf)
 
 
 ## ----get_LA_County_boundaries-------------------------------------------------
-la_county_boundary <- read_sf(here('data/raw/LA_County_Boundary/LA_County_Boundary.shp'))
+la_county_sf <- read_sf(here('data/raw/LA_County_Boundary/LA_County_Boundary.shp'))
 
 
-## ----class_la_county_boundary.------------------------------------------------
-class(la_county_boundary)
+## ----class_la_county_sf.------------------------------------------------------
+class(la_county_sf)
 
 
-## ----glimspe_la_county_boundary-----------------------------------------------
-glimpse(la_county_boundary)
+## ----glimspe_la_county_sf-----------------------------------------------------
+glimpse(la_county_sf)
+
+
+## ----map_la_county------------------------------------------------------------
+ggplot() +
+  geom_sf(data = la_county_boundary)
 
 
 ## ----check_la_county_and_inat_crs---------------------------------------------
-st_crs(la_county_boundary) == st_crs(inat_oak_sf)
+st_crs(la_county_sf) == st_crs(inat_oak_sf)
 
 
 ## ----update_la_county_crs-----------------------------------------------------
-la_county_boundary <- st_transform(la_county_boundary,  crs = st_crs(inat_oak_sf))
+la_county_sf <- st_transform(la_county_sf,  crs = st_crs(inat_oak_sf))
 
-st_crs(la_county_boundary) == st_crs(inat_oak_sf)
+st_crs(la_county_sf) == st_crs(inat_oak_sf)
 
 
 ## ----add_LA_County_to_static_map----------------------------------------------
@@ -240,7 +245,7 @@ mapview(expo_park_boundary)
 ## ----get_all_observations_within_expo_park------------------------------------
 inat_expo <- inat_sf[lengths(st_intersects(inat_sf, expo_park_boundary)) > 0, ]
 
-inat_expo
+dim(inat_expo)
 
 
 ## ----st_intersects------------------------------------------------------------
@@ -253,12 +258,6 @@ st_intersects(inat_sf, expo_park_boundary)
 
 ## ----all_observations_within_expo_park----------------------------------------
 inat_expo_2 <- inat_sf[lengths(st_intersects(inat_sf, expo_park_boundary)) > 0, ]
-
-
-## ----compare_size_of_dataframes-----------------------------------------------
-dim(inat_sf)
-
-dim(inat_expo)
 
 
 ## ----create_static_map_of_observations_in_expo_park---------------------------
@@ -333,10 +332,10 @@ mapview(buffer_river) +
 
 ## ----get_all_observations_near_la_river---------------------------------------
 
-inat_river <- inat_base_sf %>% 
+inat_data_2 <- inat_base_sf %>% 
   select(user_login, common_name, scientific_name, taxon_kingdom_name)
   
-inat_river <- inat_river[lengths(st_intersects(inat_river, buffer_river)) > 0, ]
+inat_river <- inat_data_2[lengths(st_intersects(inat_data_2, buffer_river)) > 0, ]
 
 
 

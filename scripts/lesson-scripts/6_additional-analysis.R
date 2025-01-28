@@ -12,6 +12,10 @@ library(here) # file paths
 source(here('scripts/map_utils.R'))
 
 
+## ----fix_sf_bug---------------------------------------------------------------
+sf_use_s2(FALSE)
+
+
 ## ----read_data_from_csv-------------------------------------------------------
 inat_data <- read_csv(here('data/cleaned/cnc-los-angeles-observations.csv'))
 
@@ -86,10 +90,6 @@ expo_park_sf <- la_neighborhoods_sf %>%
 expo_park_sf
 
 
-## ----fix_sf_bug---------------------------------------------------------------
-sf_use_s2(FALSE)
-
-
 ## -----------------------------------------------------------------------------
 expo_area_sf <- la_neighborhoods_sf[lengths(st_intersects(la_neighborhoods_sf, expo_park_sf)) > 0, ]
 
@@ -149,10 +149,6 @@ st_crs(ejsm_sf) == st_crs(inat_sf)
 ejsm_sf <- st_transform(ejsm_sf,  crs = st_crs(inat_sf))
 
 st_crs(ejsm_sf) == st_crs(inat_sf)
-
-
-## ----fix_sf_bug_2-------------------------------------------------------------
-sf_use_s2(FALSE)
 
 
 ## ----create_dataframe_with_regions_inat_counts--------------------------------

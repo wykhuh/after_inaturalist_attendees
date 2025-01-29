@@ -60,7 +60,7 @@ inat_year_count <- inat_data %>%
 inat_year_count
 
 
-## -----------------------------------------------------------------------------
+## ----plot_column_line_for_year_count------------------------------------------
 ggplot(data = inat_year_count,
        mapping = aes(x = year, y = count)) +
   geom_col() +
@@ -78,19 +78,19 @@ ggplot() +
  
 
 
-## -----------------------------------------------------------------------------
+## ----ge_neighborhoods---------------------------------------------------------
 la_neighborhoods_sf <- read_sf(here('data/raw/la_times_la_county_neighborhoods.json'))
 
 
 
-## -----------------------------------------------------------------------------
+## ----get_expo_park------------------------------------------------------------
 expo_park_sf <- la_neighborhoods_sf %>% 
   filter(name=='Exposition Park')
 
 expo_park_sf
 
 
-## -----------------------------------------------------------------------------
+## ----get_neighborhoods_around_expo_park---------------------------------------
 expo_area_sf <- la_neighborhoods_sf[lengths(st_intersects(la_neighborhoods_sf, expo_park_sf)) > 0, ]
 
 expo_area_sf <-  expo_area_sf %>%
@@ -99,13 +99,13 @@ expo_area_sf <-  expo_area_sf %>%
 expo_area_sf
 
 
-## -----------------------------------------------------------------------------
+## ----add_inat_count_to_neighborhoods------------------------------------------
 expo_area_count_sf <- add_inat_count_to_boundary_sf(inat_sf, expo_area_sf, 'name')
 
 expo_area_count_sf
 
 
-## -----------------------------------------------------------------------------
+## ----map_observations_per_expo_neighborhoods----------------------------------
 
 ggplot(expo_area_count_sf, aes(label=paste0(name,': ', observations_count))) +
   geom_sf() +
@@ -113,12 +113,12 @@ ggplot(expo_area_count_sf, aes(label=paste0(name,': ', observations_count))) +
 
 
 
-## -----------------------------------------------------------------------------
+## ----update_crs---------------------------------------------------------------
 expo_area_count_sf <- st_transform(expo_area_count_sf,  crs = st_crs(3857))
 
 
 
-## -----------------------------------------------------------------------------
+## ----create_map_with_basemap--------------------------------------------------
 
 ggplot(expo_area_count_sf) +
   basemap_gglayer(expo_area_count_sf) + 
@@ -145,7 +145,7 @@ ggplot(ejsm_sf, aes(fill = CIscore)) +
 st_crs(ejsm_sf) == st_crs(inat_sf)
 
 
-## -----------------------------------------------------------------------------
+## ----update_crs_for_ejsm------------------------------------------------------
 ejsm_sf <- st_transform(ejsm_sf,  crs = st_crs(inat_sf))
 
 st_crs(ejsm_sf) == st_crs(inat_sf)

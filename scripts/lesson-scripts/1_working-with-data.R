@@ -153,7 +153,7 @@ my_data <- inat_data %>%
            positional_accuracy <= 5) %>%
   select(user_login, common_name, scientific_name, positional_accuracy, coordinates_obscured)
 
-my_data
+dim(my_data)
 
 
 ## ----and_unique_coordinates_obscured------------------------------------------
@@ -170,6 +170,7 @@ my_data <- inat_data %>%
         common_name == 'Western Fence Lizard')  %>%
   select(user_login, observed_on, common_name)
 
+dim(my_data)
 
 
 ## ----or_common_name-----------------------------------------------------------

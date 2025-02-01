@@ -7,13 +7,14 @@ library(here) # file paths
 #
 # Get all your City Nature Challenge observations.
 #
-# -   Use `read_csv()` to load the CNC CSV.
+# -   Use `read_csv()` to load the CNC CSV.Assign the results to `my_inat_data`
+#     object
 # -   Use `filter()` to select observations with your iNaturalist username.
 #     If you don't have any CNC observations, use 'quantron' the most prolific
 #     community scientist for CNC Los Angeles.
 # -   Use `select()` to select 4 columns. One of the columns should be
 #     `common_name`
-# -   assign the results to `my_obs` object
+# -   assign the results of `filter()` and `select()` to `my_obs` object
 # -   click on `my_obs` in the Environment tab to see the results
 
 

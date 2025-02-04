@@ -119,11 +119,6 @@ inat_data %>%
 
 
 ## ----exercise_your_observations-----------------------------------------------
-my_inat_data <- read_csv(here('data/cleaned/cnc-los-angeles-observations.csv'))
-
-my_obs <- my_inat_data %>%
-  filter(user_login == 'natureinla') %>%
-  select(user_login, observed_on, common_name, scientific_name)
 
 
 ## ----filter_with_common_name_and_quality_grade--------------------------------
@@ -306,10 +301,6 @@ dim(ants_obs)
 
 
 ## ----exercise_your_research_grade---------------------------------------------
-my_inat_data %>%
-  filter(user_login == 'natureinla' &
-           quality_grade == 'research') %>%
-  select(user_login, observed_on, common_name, scientific_name)
 
 
 ## ----complex_queries----------------------------------------------------------
@@ -366,14 +357,9 @@ unique(alt_2$common_name)
 
 
 ## ----exercise_unique_common_names---------------------------------------------
-unique(my_obs$common_name)[0:10]
 
 
 ## ----exercise_two_species-----------------------------------------------------
-my_inat_data %>%
-  filter(user_login == 'natureinla') %>%
-  filter(common_name == 'Red-eared Slider' | common_name=='Monarch') %>%
-  select(user_login, observed_on, common_name, scientific_name)
 
 
 ## ----create_character_vector--------------------------------------------------
@@ -430,10 +416,6 @@ unique(temp$year)
 
 
 ## ----exercise_last_year-------------------------------------------------------
-my_inat_data %>%
-   mutate(year = year(observed_on)) %>%
-  filter(user_login == 'natureinla' & year == 2024) %>%
-  select(user_login, observed_on, common_name, scientific_name)
 
 
 ## ----count_year---------------------------------------------------------------
@@ -498,10 +480,6 @@ counts
 
 
 ## ----exercise_observations_per_year-------------------------------------------
-my_inat_data %>%
-  mutate(year = year(observed_on)) %>%
-  filter(user_login == 'natureinla') %>%
-  count(year, name='obs_count')
 
 
 ## ----3_condition_my_observation-----------------------------------------------

@@ -10,12 +10,13 @@ source(here('scripts/map_utils.R'))
 #
 # Create a map for one species.
 #
-# -   use `read_csv()` to read iNaturalist file.
+# -   Use read_csv() to load the CNC CSV. Assign the results to `my_inat_data` object.
 # -   use `st_as_sf()` to add `geometry` column.
-# -   use `select()` to pick four columns.
 # -   use `filter()` to select observations for one species.
-# -   save iNaturalist observations to `my_inat_sf` object.
+# -   use `select()` to pick four columns.
+# -   Assign the results of `filter()` and `select()` to `my_inat_sf`
 # -   create either a static or interactive map.
+
 
 
 # ## Exercise 2
@@ -33,13 +34,13 @@ source(here('scripts/map_utils.R'))
 #
 # Create a map for all observations that are inside of a specific area
 #
-# -   use `read_csv()` to read iNaturalist file.
+# -   use `my_inat_data` from exercise 1 to access iNaturalist data
 # -   use `st_as_sf()` to add `geometry` column to iNaturalist data.
 # -   use `select()` to select 4 columns for iNaturalist data.
-# -   Used Draw map boundaries (https://wykhuh.github.io/draw-map-boundaries/)
+# -   use [Draw map boundaries](https://wykhuh.github.io/draw-map-boundaries/)
 #     to draw and download an area that you are interested in.
 # -   Save the file to the `data/raw` directory.
 # -   use `read_sf()` to read your boundary data.
 # -   check if iNaturalist observations and your boundary use the same CRS
-# -   get observations inside a boundary
+# -   get observations inside the boundary
 # -   create static or interactive map

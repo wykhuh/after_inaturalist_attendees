@@ -12,7 +12,7 @@ library(here) # file paths
 # -   Use `mutate()` to add year column
 # -   Use `filter()` to select observations you made. Use 'quantron' as the
 #     user if you don't have CNC observations.
-# -   Save the data frame to `my_obs_by_year` object
+# -   Assign the results of `mutate()` and `filter()` to `my_obs_by_year`
 # -   Use `ggplot()` to set the data and aesthetics.
 # -   Choose which type of chart you want: bar or line.
 
@@ -27,6 +27,3 @@ library(here) # file paths
 # -   choose the one of the built in themes
 # -   change the axis titles
 # -   change the colors of the bars or lines
-
-
-

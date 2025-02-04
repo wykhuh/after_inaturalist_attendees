@@ -38,7 +38,7 @@ ggplot(data = inat_year, mapping = aes(y = year)) +
 
 ## ----create_dataframe_with_year_count-----------------------------------------
 inat_year_count <- inat_year %>%
-  count(year, name='count')  
+  count(year, name='count')
 
 inat_year_count
 
@@ -70,6 +70,16 @@ ggplot(data = inat_year,
 
 
 ## ----exercise_create_bar_chart------------------------------------------------
+
+my_inat_data <- read_csv(here('data/cleaned/cnc-los-angeles-observations.csv'))
+
+my_obs_by_year  <- my_inat_data %>%
+  mutate(year = year(observed_on))  %>%
+  filter(user_login == 'natureinla')
+
+
+ggplot(data = my_obs_by_year, mapping = aes(x = year)) +
+  geom_bar()
 
 
 ## ----get_all_colors-----------------------------------------------------------
@@ -190,6 +200,13 @@ ggplot(data = inat_year,
 
 
 ## ----exercise_change_chart_appearance-----------------------------------------
+my_chart <- ggplot(data = my_obs_by_year,
+                   mapping = aes(x = year)) +
+  geom_bar(fill="tan")
+
+my_chart +
+  theme_classic() +
+  labs(title = "CNC Los Angeles",  x = "Year",  y = "Observations")
 
 
 ## ----create_facets------------------------------------------------------------

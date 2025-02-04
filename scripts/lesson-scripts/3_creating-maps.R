@@ -70,6 +70,15 @@ mapview(inat_oak_sf)
 
 ## ----exercise_create_map_one_species------------------------------------------
 
+my_inat_data <- read_csv(here('data/cleaned/cnc-los-angeles-observations.csv'))
+
+my_inat_sf <- my_inat_data %>%
+  st_as_sf(coords = c("longitude", "latitude"),   crs = 4326)  %>%
+  select(common_name, scientific_name, user_login, observed_on) %>%
+  filter(common_name == 'House Finch')
+
+mapview(my_inat_sf)
+
 
 ## ----get_LA_County_boundaries-------------------------------------------------
 la_county_sf <- read_sf(here('data/raw/LA_County_Boundary/LA_County_Boundary.shp'))
@@ -200,6 +209,17 @@ mapview(la_county_sf, legend=FALSE,
 
 ## ----exercise_create_map_one_species_county_boundary--------------------------
 
+my_la_county_sf <- read_sf(here('data/raw/LA_County_Boundary/LA_County_Boundary.shp'))
+
+st_crs(my_la_county_sf) == st_crs(my_inat_sf)
+
+my_la_county_sf <- st_transform(my_la_county_sf,  crs = st_crs(my_inat_sf))
+
+st_crs(my_la_county_sf) == st_crs(my_inat_sf)
+
+mapview(my_la_county_sf) +
+  mapview(my_inat_sf)
+
 
 ## ----get_Expo_park_boundaries-------------------------------------------------
 expo_park_boundary <- read_sf(here('data/raw/boundaries_expo_park_area.geojson'))
@@ -262,6 +282,20 @@ inat_expo %>%
 
 
 ## ----exercise_create_map_of_observations_inside_boundary----------------------
+
+my_all_inat_sf <- read_csv(here('data/cleaned/cnc-los-angeles-observations.csv')) %>%
+  st_as_sf(coords = c("longitude", "latitude"),   crs = 4326) %>%
+  select(common_name, scientific_name, user_login, observed_on)
+
+
+my_boundary_sf <- read_sf(here('data/raw/boundaries_usc.geojson'))
+
+st_crs(my_inat_sf) == st_crs(my_boundary_sf)
+
+my_inat_area_sf <- my_all_inat_sf[st_intersects(my_all_inat_sf, my_boundary_sf) %>% lengths > 0, ]
+
+mapview(my_boundary_sf) +
+  mapview(my_inat_area_sf)
 
 
 ## ----read_la_river_file-------------------------------------------------------

@@ -52,7 +52,7 @@ library(here) # file paths
 # -   Use `mutate()` and `year()` to add year column
 # -   Use `filter()` to pick observations with your username and year is 2024.
 #     Use 'quantron' as the user if you don't have CNC observations.
-# -   Use select() to pick 4 columns
+# -   Use `select()` to pick 4 columns
 
 
 

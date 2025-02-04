@@ -4,6 +4,7 @@ library(readr) # read and write tabular data
 library(dplyr) # manipulate data
 library(lubridate) # manipulate dates
 library(here) # file paths
+library(stringr) # work with string
 
 
 ## ----assign_read_csv_to_object------------------------------------------------
@@ -118,6 +119,11 @@ inat_data %>%
 
 
 ## ----exercise_your_observations-----------------------------------------------
+my_inat_data <- read_csv(here('data/cleaned/cnc-los-angeles-observations.csv'))
+
+my_obs <- my_inat_data %>%
+  filter(user_login == 'natureinla') %>%
+  select(user_login, observed_on, common_name, scientific_name)
 
 
 ## ----filter_with_common_name_and_quality_grade--------------------------------
@@ -236,7 +242,74 @@ unique(my_data$license)
 
 
 
+## ----get_common_names---------------------------------------------------------
+common_names <- unique(inat_data$common_name)
+
+length(common_names)
+
+
+## ----get_matches_for_lizard---------------------------------------------------
+str_subset(common_names, pattern = 'lizard')
+
+
+## ----get_matches_for_lizard_case_insensitive----------------------------------
+str_subset(common_names, pattern = '(?i)lizard')
+
+
+## ----get_matches_for_ants-----------------------------------------------------
+str_subset(common_names, pattern = '(?i)ants')
+
+
+## ----get_matches_for_word_ants------------------------------------------------
+str_subset(common_names, pattern = "(?i)\\bants\\b")
+
+
+## ----get_matches_for_starts_with_ants-----------------------------------------
+str_subset(common_names, pattern = "(?i)\\bant")[0:30]
+
+
+## ----get_matches_for_ends_with_ants-------------------------------------------
+str_subset(common_names, pattern = "(?i)ant\\b")[0:30]
+
+
+## ----get_observations_for_ants------------------------------------------------
+ants <- c(
+"Acorn Ants and Allies",
+"Acrobat Ants",
+"Argentine Ant",
+"Big-headed Ants",
+"Californicus-group Harvester Ants",
+"Camponotin Ants",
+"Carpenter Ants",
+"Citronella Ants, Fuzzy Ants, and Allies",
+"fallax-group Big-headed Ants",
+"Formicine Ants",
+"Furrowed Ants",
+"Lasiin Ants",
+"Leptomyrmecin Ants",
+"Molesta-group Thief Ants",
+"Myrmicine Ants",
+"Pavement Ants",
+"Pyramid Ants",
+"Sneaking Ants",
+"Sneaking Ants",
+"Solenopsis Fire Ants and Thief Ants",
+"Velvety Tree Ants",
+"Velvety Tree Ants"
+)
+
+ants_obs <- inat_data %>%
+  filter(common_name %in% ants) %>%
+  select(user_login, observed_on, common_name)
+
+dim(ants_obs)
+
+
 ## ----exercise_your_research_grade---------------------------------------------
+my_inat_data %>%
+  filter(user_login == 'natureinla' &
+           quality_grade == 'research') %>%
+  select(user_login, observed_on, common_name, scientific_name)
 
 
 ## ----complex_queries----------------------------------------------------------
@@ -293,9 +366,15 @@ unique(alt_2$common_name)
 
 
 ## ----exercise_unique_common_names---------------------------------------------
+unique(my_obs$common_name)[0:10]
 
 
 ## ----exercise_two_species-----------------------------------------------------
+my_inat_data %>%
+  filter(user_login == 'natureinla') %>%
+  filter(common_name == 'Red-eared Slider' | common_name=='Monarch') %>%
+  select(user_login, observed_on, common_name, scientific_name)
+
 
 ## ----create_character_vector--------------------------------------------------
 letters <- c('a','b','c', 'd')
@@ -351,6 +430,11 @@ unique(temp$year)
 
 
 ## ----exercise_last_year-------------------------------------------------------
+my_inat_data %>%
+   mutate(year = year(observed_on)) %>%
+  filter(user_login == 'natureinla' & year == 2024) %>%
+  select(user_login, observed_on, common_name, scientific_name)
+
 
 ## ----count_year---------------------------------------------------------------
 inat_data %>%
@@ -414,6 +498,11 @@ counts
 
 
 ## ----exercise_observations_per_year-------------------------------------------
+my_inat_data %>%
+  mutate(year = year(observed_on)) %>%
+  filter(user_login == 'natureinla') %>%
+  count(year, name='obs_count')
+
 
 ## ----3_condition_my_observation-----------------------------------------------
 

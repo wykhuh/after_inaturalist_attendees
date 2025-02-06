@@ -237,6 +237,9 @@ unique(my_data$license)
 
 
 
+## ----exercise_your_research_grade---------------------------------------------
+
+
 ## ----get_common_names---------------------------------------------------------
 common_names <- unique(inat_data$common_name)
 
@@ -298,9 +301,6 @@ ants_obs <- inat_data %>%
   select(user_login, observed_on, common_name)
 
 dim(ants_obs)
-
-
-## ----exercise_your_research_grade---------------------------------------------
 
 
 ## ----complex_queries----------------------------------------------------------
